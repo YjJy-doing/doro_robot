@@ -431,8 +431,7 @@ void PetDog::walkfrontFour()
 
 void PetDog::walkBack()
 {
-    while(1)
-    {
+    for (int i = 0; i < 4; ++i) {
         if (!WalkBackCycle()) {
             xEventGroupClearBits(action_task_event_,STOP_TASK_EVENT);
             break;
@@ -443,8 +442,8 @@ void PetDog::walkBack()
 
 void PetDog::turnLeft()
 {
-    while(1)
-    {
+    constexpr int kTurn90Cycles = 2;
+    for (int i = 0; i < kTurn90Cycles; ++i) {
         if (!TurnLeftCycle()) {
             xEventGroupClearBits(action_task_event_,STOP_TASK_EVENT);
             break;
@@ -467,8 +466,8 @@ void PetDog::turnLeft90()
 
 void PetDog::turnRight()
 {
-    while(1)
-    {
+    constexpr int kTurn90Cycles = 2;
+    for (int i = 0; i < kTurn90Cycles; ++i) {
         if (!TurnRightCycle()) {
             xEventGroupClearBits(action_task_event_,STOP_TASK_EVENT);
             break;
@@ -543,7 +542,8 @@ void PetDog::Action(int  action)
             xTaskCreate([](void* arg)
             {
                 auto this_ = (PetDog*)arg;
-                this_->turnLeft();
+                this_->turnLeft90();
+                Application::GetInstance().SetActionState(kActionStateStand);
                 vTaskDelete(NULL);
             },"TurnLeft",2048,this,1,NULL);
             break;
@@ -551,7 +551,8 @@ void PetDog::Action(int  action)
             xTaskCreate([](void* arg)
             {
                 auto this_ = (PetDog*)arg;
-                this_->turnRight();
+                this_->turnRight90();
+                Application::GetInstance().SetActionState(kActionStateStand);
                 vTaskDelete(NULL);
             },"TurnRight",2048,this,1,NULL);
             break;
@@ -559,7 +560,8 @@ void PetDog::Action(int  action)
             xTaskCreate([](void* arg)
             {
                 auto this_ = (PetDog*)arg;
-                this_->walkfront();
+                this_->walkfrontFour();
+                Application::GetInstance().SetActionState(kActionStateStand);
                 vTaskDelete(NULL);
             },"walkfront",2048,this,1,NULL);
             break;
@@ -568,6 +570,7 @@ void PetDog::Action(int  action)
             {
                 auto this_ = (PetDog*)arg;
                 this_->walkfrontFour();
+                Application::GetInstance().SetActionState(kActionStateStand);
                 vTaskDelete(NULL);
             },"walkfront_four",2048,this,1,NULL);
             break;
@@ -576,6 +579,7 @@ void PetDog::Action(int  action)
             {
                 auto this_ = (PetDog*)arg;
                 this_->walkBack();
+                Application::GetInstance().SetActionState(kActionStateStand);
                 vTaskDelete(NULL);
             },"walkBack",2048,this,1,NULL);
             break;
@@ -584,6 +588,7 @@ void PetDog::Action(int  action)
             {
                 auto this_ = (PetDog*)arg;
                 this_->turnLeft90();
+                Application::GetInstance().SetActionState(kActionStateStand);
                 vTaskDelete(NULL);
             },"turnLeft90",2048,this,1,NULL);
             break;
@@ -592,6 +597,7 @@ void PetDog::Action(int  action)
             {
                 auto this_ = (PetDog*)arg;
                 this_->turnRight90();
+                Application::GetInstance().SetActionState(kActionStateStand);
                 vTaskDelete(NULL);
             },"turnRight90",2048,this,1,NULL);
             break;

@@ -553,6 +553,8 @@ void Application::Start() {
                         }
                     }
                     if (should_show_talent && device_state_ == kDeviceStateIdle) {
+                        auto display = Board::GetInstance().GetDisplay();
+                        display->SetEmotion("relaxed");
                         SetActionState(kActionStateSway);
                     }
                 });
@@ -693,7 +695,7 @@ void Application::Start() {
     wake_word_->OnWakeWordDetected([this](const std::string& wake_word) {
         auto& app = Application::GetInstance();
         app.SetActionState(kActionStateStand);
-        Schedule([this, &wake_word]() {
+        Schedule([this, wake_word]() {
             if (!protocol_) {
                 return;
             }
@@ -798,6 +800,8 @@ void Application::OnClockTimer() {
         if (idle_action_countdown_s_ == 0) {
             Schedule([this]() {
                 if (device_state_ == kDeviceStateIdle) {
+                    auto display = Board::GetInstance().GetDisplay();
+                    display->SetEmotion("sleepy");
                     SetActionState(kActionStateIdleRandom);
                 }
             });
@@ -1161,6 +1165,8 @@ void Application::Reboot() {
 }
 
 void Application::WakeWordInvoke(const std::string& wake_word) {
+    SetActionState(kActionStateStand);
+
     if (device_state_ == kDeviceStateIdle) {
         ToggleChatState();
         Schedule([this, wake_word]() {
@@ -1170,7 +1176,7 @@ void Application::WakeWordInvoke(const std::string& wake_word) {
         }); 
     } else if (device_state_ == kDeviceStateSpeaking) {
         Schedule([this]() {
-            AbortSpeaking(kAbortReasonNone);
+            AbortSpeaking(kAbortReasonWakeWordDetected);
         });
     } else if (device_state_ == kDeviceStateListening) {   
         Schedule([this]() {

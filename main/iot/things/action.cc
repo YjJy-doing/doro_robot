@@ -16,14 +16,19 @@ private:
 
     
 public:
-    Action() : Thing("Action", "当前 AI 机器人的行为（站立，坐下，睡觉，持续左转，持续右转，向左转90度，向右转90度，前进，前进四，后退，展示才艺）") {
-        // 定义设备可以被远程执行的指令
+    Action() : Thing("Action", "机器人动作。机器人可以做以下动作：\n"
+                                         "Walk: 向前移动四步\n"
+                                         "Walk back: 向后移动四步\n"
+                                         "Turn left: 向左转90度\n"
+                                         "Turn right: 向右转90度\n"
+                                         "stand at attention: 立正\n"
+                                         "sitdown: 坐下\n"
+                                         "sleep: 睡觉\n"
+                                         "show talent: 展示才艺\n"
+                                         "hello: 打招呼\n"
+                                         "bye-bye: 再见\n"
+                                         "stop: 立即停止当前动作") {
         methods_.AddMethod("Walk", "前进", ParameterList(), [this](const ParameterList& parameters) {
-            auto& app = Application::GetInstance();
-            app.SetActionState(kActionStateWalk);
-        });
-
-        methods_.AddMethod("Walk four steps", "前进四", ParameterList(), [this](const ParameterList& parameters) {
             auto& app = Application::GetInstance();
             app.SetActionState(kActionStateWalkFour);
         });
@@ -45,27 +50,17 @@ public:
             app.SetActionState(kActionStateSleep);
         });
 
-        methods_.AddMethod("turn left", "左转（持续旋转，直到停下来）", ParameterList(), [this](const ParameterList& parameters) {
-            auto& app = Application::GetInstance();
-            app.SetActionState(kActionStateTurnLeft);
-        });
-
-        methods_.AddMethod("turn right", "右转（持续旋转，直到停下来）", ParameterList(), [this](const ParameterList& parameters) {
-            auto& app = Application::GetInstance();
-            app.SetActionState(kActionStateTurnRight);
-        });
-
-        methods_.AddMethod("turn left 90", "向左转（左转90度后停下）", ParameterList(), [this](const ParameterList& parameters) {
+        methods_.AddMethod("turn left", "向左转", ParameterList(), [this](const ParameterList& parameters) {
             auto& app = Application::GetInstance();
             app.SetActionState(kActionStateTurnLeft90);
         });
 
-        methods_.AddMethod("turn right 90", "向右转（右转90度后停下）", ParameterList(), [this](const ParameterList& parameters) {
+        methods_.AddMethod("turn right", "向右转", ParameterList(), [this](const ParameterList& parameters) {
             auto& app = Application::GetInstance();
             app.SetActionState(kActionStateTurnRight90);
         });
 
-        methods_.AddMethod("show talent", "展示才艺（前后摇摆）", ParameterList(), [this](const ParameterList& parameters) {
+        methods_.AddMethod("show talent", "展示才艺", ParameterList(), [this](const ParameterList& parameters) {
             auto& app = Application::GetInstance();
             app.SetActionState(kActionStateSway);
         });
@@ -80,7 +75,7 @@ public:
             app.SetActionState(kActionStateWave);
         });
 
-        methods_.AddMethod("stop", "停下来", ParameterList(), [this](const ParameterList& parameters) {
+        methods_.AddMethod("stop", "停下", ParameterList(), [this](const ParameterList& parameters) {
             auto& app = Application::GetInstance();
             app.SetActionState(kActionStateStop);
         });

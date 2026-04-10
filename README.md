@@ -8,11 +8,26 @@
 
 ## 📸 项目成果展示
 
-| 机械狗实物 | 运动控制演示 | 家居控制演示 |
+| 机械狗主控实物 | 启动与连接日志 | MCP 工具调用日志 |
 |:---:|:---:|:---:|
-| ![机械狗实物](docs/dog-photo.jpg) | ![运动控制](docs/dog-action-demo.gif) | ![家居控制](docs/mqtt-demo.gif) |
+| <img src="docs/设备端实物图.jpg" alt="设备端实物图" width="280"/> | <img src="docs/设备端+服务端初始化连接.png" alt="初始化连接日志" width="280"/> | <img src="docs/设备端+服务端mcp工具控制日志.png" alt="MCP控制日志" width="280"/> |
 
-![机械狗实物](docs/doro.jpg)
+### 🧩 设备端硬件设计（机械狗主控）
+
+| 实物图 | 原理图 | PCB |
+|:---:|:---:|:---:|
+| <img src="docs/设备端实物图.jpg" alt="设备端实物图" width="260"/> | <img src="docs/设备端原理图.png" alt="设备端原理图" width="260"/> | <img src="docs/设备端PCB.png" alt="设备端PCB" width="260"/> |
+
+### 🏠 受控端硬件设计（家居节点）
+
+| 灯控节点实物 | 风扇节点实物 | 原理图 |
+|:---:|:---:|:---:|
+| <img src="docs/受控端实物图-0.jpg" alt="受控端灯控实物" width="260"/> | <img src="docs/受控端实物图-1.jpg" alt="受控端风扇实物" width="260"/> | <img src="docs/受控端原理图.png" alt="受控端原理图" width="260"/> |
+
+| PCB |
+|:---:|
+| <img src="docs/受控端PCB.png" alt="受控端PCB" width="420"/> |
+
 ---
 
 ## ✨ 新增功能亮点
